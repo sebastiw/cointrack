@@ -2,55 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
+import 'inherited_assets.dart';
 
-class GraphWidget extends StatefulWidget {
-  GraphWidget({Key? key}) : super(key: key);
-
-  @override
-  _GraphWidgetState createState() => _GraphWidgetState();
-}
-
-class _GraphWidgetState extends State<GraphWidget> {
-  List<Map<String, Object>> _data1 = [{ 'name': 'Please wait', 'value': 0 }];
-
-  getData1() async {
-    await Future.delayed(Duration(seconds: 1));
-
-    const dataObj = [{
-      'name': 'Jan',
-      'value': 8726.2453,
-    }, {
-      'name': 'Feb',
-      'value': 2445.2453,
-    }, {
-      'name': 'Mar',
-      'value': 6636.2400,
-    }, {
-      'name': 'Apr',
-      'value': 4774.2453,
-    }, {
-      'name': 'May',
-      'value': 1066.2453,
-    }, {
-      'name': 'Jun',
-      'value': 4576.9932,
-    }, {
-      'name': 'Jul',
-      'value': 8926.9823,
-    }];
-
-    this.setState(() { this._data1 = dataObj;});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    this.getData1();
-  }
-
+class GraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<Map<String, Object>> _data1 = InheritedAssets.of(context).assets;
+
     return Container(
       child: Echarts(
         captureAllGestures: true,
