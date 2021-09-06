@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class InheritedAssets extends StatefulWidget {
   final Widget child;
+
   final List<Map<String, Object>> assets = [
     {'name': 'Please wait', 'value': 0}
   ];

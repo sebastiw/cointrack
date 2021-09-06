@@ -1,8 +1,9 @@
-import 'dart:async';
+import 'package:cointrack/inherited_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'graph.dart';
 import 'inherited_assets.dart';
+import 'preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,10 +21,9 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('CoinTrack'),
         ),
-        backgroundColor: Colors.black,
-        body: InheritedAssets(
-          child: HomeChooserWidget()
-        ),
+        backgroundColor: Colors.white,
+        body: InheritedPreferences(
+          child: InheritedAssets(child: HomeChooserWidget())),
         floatingActionButton: SpeedDial(
             backgroundColor: Colors.red,
             icon: Icons.add,
@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
                 child: Icon(Icons.app_registration_rounded),
                 label: 'Asset',
                 backgroundColor: Colors.amberAccent,
-                onTap: () {},
+                onTap: () {
+                },
               ),
             ]),
       ),
@@ -50,7 +51,13 @@ class HomeChooserWidget extends StatefulWidget {
 class _HomeChooserState extends State<HomeChooserWidget> {
   @override
   Widget build(BuildContext context) {
+    Preferences p = InheritedPreferences.of(context).preferences;
+
     return SingleChildScrollView(
-        child: Center(child: Column(children: <Widget>[GraphWidget()])));
+        child: Center(
+            child: Column(children: <Widget>[
+      GraphWidget(),
+      Text('HERE IS: ${p.base}')
+    ])));
   }
 }
