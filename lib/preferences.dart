@@ -7,4 +7,8 @@ class Preferences {
     var _base = json['base'] ?? 'USD';
     this.base = _base;
   }
+
+  String toString() {
+    return '{"base": "${base}"}';
+  }
 }

@@ -3,12 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'preferences.dart';
 
-final String defaultPreferences = """
-{
-  "preferences": {"base": "USD", "assets": ["BTC"]}
-}
-""";
-
 class InheritedPreferences extends StatefulWidget {
   final Widget child;
   Preferences preferences = Preferences();
@@ -28,19 +22,20 @@ class InheritedPreferences extends StatefulWidget {
 }
 
 class _InheritedPreferencesState extends State<InheritedPreferences> {
-  Preferences preferences =
-      Preferences.fromJson(json.decode(defaultPreferences));
+  Preferences preferences = Preferences();
 
   loadPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      String _prefs = ((prefs.getString('preferences') ?? defaultPreferences));
+      String _prefs = (prefs.getString('preferences') ?? '{}');
+      print('Load: $_prefs');
       preferences = Preferences.fromJson(json.decode(_prefs));
     });
   }
 
   storePreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('Store: ${this.preferences.toString()}');
     await prefs.setString('preferences', this.preferences.toString());
   }
 

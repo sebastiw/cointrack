@@ -8,37 +8,47 @@ import 'preferences.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('CoinTrack'),
-        ),
-        backgroundColor: Colors.white,
-        body: InheritedPreferences(
-          child: InheritedAssets(child: HomeChooserWidget())),
-        floatingActionButton: SpeedDial(
-            backgroundColor: Colors.red,
-            icon: Icons.add,
-            activeIcon: Icons.close,
-            renderOverlay: false,
-            children: [
-              SpeedDialChild(
-                child: Icon(Icons.app_registration_rounded),
-                label: 'Asset',
-                backgroundColor: Colors.amberAccent,
-                onTap: () {
-                },
-              ),
-            ]),
+      home: InheritedPreferences(child: Home()),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: this.key,
+      appBar: AppBar(
+        title: Text('CoinTrack'),
       ),
+      backgroundColor: Colors.white,
+      body: InheritedAssets(child: HomeChooserWidget()),
+      floatingActionButton: SpeedDial(
+          backgroundColor: Colors.red,
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          renderOverlay: false,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.app_registration_rounded),
+              label: 'Asset',
+              backgroundColor: Colors.amberAccent,
+              onTap: () {
+                Preferences p = Preferences.fromJson({'base': 'BTC'});
+                InheritedPreferences.of(context).preferences = p;
+                InheritedPreferences.of(context).storePreferences();
+                print('Prefs now: $p');
+              },
+            ),
+          ]),
     );
   }
 }
