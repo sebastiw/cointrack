@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'graph.dart';
 import 'inherited_assets.dart';
+import 'list_assets.dart';
 import 'preferences.dart';
 
 void main() => runApp(MyApp());
@@ -28,27 +29,22 @@ class Home extends StatelessWidget {
       key: this.key,
       appBar: AppBar(
         title: Text('CoinTrack'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Add Assets',
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute<void>(
+                builder: (BuildContext context) {
+                  return ListAssets();
+                },
+              ));
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: InheritedAssets(child: HomeChooserWidget()),
-      floatingActionButton: SpeedDial(
-          backgroundColor: Colors.red,
-          icon: Icons.add,
-          activeIcon: Icons.close,
-          renderOverlay: false,
-          children: [
-            SpeedDialChild(
-              child: Icon(Icons.app_registration_rounded),
-              label: 'Asset',
-              backgroundColor: Colors.amberAccent,
-              onTap: () {
-                Preferences p = Preferences.fromJson({'base': 'BTC'});
-                InheritedPreferences.of(context).preferences = p;
-                InheritedPreferences.of(context).storePreferences();
-                print('Prefs now: $p');
-              },
-            ),
-          ]),
     );
   }
 }

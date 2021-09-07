@@ -32,6 +32,8 @@ dependencies:
   flutter_echarts: 2.2.0
   flutter_speed_dial: 4.3.0
   shared_preferences: 2.0.7
+  http: 0.13.3
+
 
 dev_dependencies:
   flutter_test:
